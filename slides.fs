@@ -27,14 +27,15 @@ vocabulary slides also slides definitions
 ( ------------------------------------------------------------ )
 ( Slide drawing )
 
-variable slide
-variable deck
+1000 constant max-slides
+create deck max-slides cells allot
 variable deck-count
+variable slide
 : slide-num   tiny home height font-margin @ - font-y !
               slide @ 1+ s>d <# #s #> font-type
               s"  of " font-type
               deck-count @ s>d <# #s #> font-type ;
-: draw   deck @ slide @ cells + @ clear execute slide-num flip ;
+: draw   deck slide @ cells + @ clear execute slide-num flip ;
 : slide-clip   slide @ 0 max deck-count @ 1- min slide ! ;
 : slide-step ( n -- ) slide +! slide-clip draw ;
 : backward -1 slide-step ;
@@ -70,9 +71,14 @@ set-current
 : fn. ( n -- )
     s>d swap over dabs <<# 32 hold #s rot sign #> font-type #>> ;
 
+( Create unnamed slides )
+: +slide ( fn -- ) deck deck-count @ cells + !  1 deck-count +! ;
+: slide:   :noname ;
+: ;slide   postpone ; +slide ; immediate
+
 ( Start the slideshow )
-: slideshow ( firstslide -- )
-  dup deck ! here swap - cell / deck-count !
+: slideshow
+  depth throw
   1024 768 window
   begin
     wait

@@ -5,7 +5,7 @@ require gimple1.fs
 
 gimple1 font !
 
-: title
+slide:
   super-big home
   font-cr font-cr
   s" Simple Scalable" center-type
@@ -13,18 +13,18 @@ gimple1 font !
   font-cr normal
   s" Brad Nelson" center-type
   s" November 16, 2013" center-type
-;
+;slide
 
-: motivation
+slide:
   .title" Motivation"
   *f" Fonts are a sizeable part of the"
   +f" footprint of even the simplest"
   +f" system"
   *f" Letters can be things of beauty"
   *f" Small is cool"
-;
+;slide
 
-: ground-rules
+slide:
   .title" Ground Rules"
   *f" Use gforth"
   *f" Wrap bitmapped graphics + events"
@@ -32,9 +32,9 @@ gimple1 font !
   +f" display."
   *f" Integer math only"
   *f" Use smallness as an artistic constraint"
-;
+;slide
 
-: simple-graphics
+slide:
   .title" Simple Graphics"
   +f" Startup:"
   +f"  window ( w h -- )"
@@ -43,9 +43,9 @@ gimple1 font !
   +f"  width ( -- n )"
   +f"  height ( -- n )"
   +f"  flip ( -- )"
-;
+;slide
 
-: simple-events
+slide:
   .title" Simple Events"
   +f" Getting events:"
   +f"   wait ( -- )"
@@ -57,11 +57,11 @@ gimple1 font !
   +f"  last-keysym ( -- n )"
   +f"  last-keycode ( -- n )"
   +f"  event ( -- n )"
-;
+;slide
 
 : bezier   .f"  Be" bspace 30 font-slant ! .f" '"
            0 font-slant ! .f" zier" ;
-: bezier-curves
+slide:
   big home bezier .f"  Curves" font-cr
   *f" Described by 3 or more control points"
   *f" End points are one the curve"
@@ -74,9 +74,9 @@ gimple1 font !
   width 3 10 */ height 6 10 */
   width 7 10 */ height 7 10 */
   width 3 10 */ height 8 10 */ quartic
-;
+;slide
 
-: de-castelijau-subdivision
+slide:
   .title" De Castelijau Subdivision"
   bullet normal .f" Divide a " bezier .f"  curve in two" font-cr
   *f" Just + and 2/ for the middle"
@@ -95,17 +95,17 @@ gimple1 font !
   width 3 10 */ height 6 10 */
   width 7 10 */ height 7 10 */
   width 3 10 */ height 8 10 */ quartic
-;
+;slide
 
-: quartic-curves-in-forth
+slide:
   .title" Quartic Curves in Forth"
   *f" Use fixed-point with 8-bits of fraction"
   *f" Variables to assemble points,"
   +f" then fill the data stack before"
   +f" recursion."
-;
+;slide
 
-: quartic-drawing
+slide:
   .title" Quartic Drawing"
   +f" ( Quartic bezier curve plotting )"
   +f" point q1  point q2  point q3"
@@ -123,17 +123,15 @@ gimple1 font !
   +f"     recurse recurse"
   +f"   then"
   +f" ;"
-;
+;slide
 
-: anti-aliased-pen
+slide:
   .title" Anti-aliased Pen"
   *f" Draw an anti-aliased filled circle"
   *f" Blend with other circles using min/max"
   *f" Calculate distance in a window"
   +f" -> sqrt :-("
-;
-
-( ------------------------------------------------------------ )
+;slide
 
 : grid-x 10 + width 25 */ ;
 : grid-y 14 + height 30 */ ;
@@ -146,7 +144,7 @@ gimple1 font !
   7 0 do i 0 grid-xy i 10 grid-xy line loop
   11 0 do 0 i grid-xy 6 i grid-xy line loop
 ;
-: font-layout1
+slide:
   font-layout' big
   2 2 grid-xy 3 9 grid-xy line
   3 9 grid-xy 4 3 grid-xy line
@@ -155,8 +153,8 @@ gimple1 font !
   20 10 font-pick
   2 2 grid-xy 3 9 grid-xy 4 3 grid-xy quartic
   2 3 grid-xy 4 5 grid-xy 4 2 grid-xy quartic
-;
-: font-layout2
+;slide
+slide:
   font-layout' big
   4 2 grid-xy 5 6 grid-xy line
   5 6 grid-xy 2 4 grid-xy line
@@ -165,11 +163,9 @@ gimple1 font !
   20 10 font-pick
   4 2 grid-xy 5 6 grid-xy 2 4 grid-xy quartic
   4 2 grid-xy 0 2 grid-xy 4 4 grid-xy quartic
-;
+;slide
 
-( ------------------------------------------------------------ )
-
-: font-format
+slide:
   .title" Font Format"
   +f" ( a )  425624 /, 420244 /, /;,"
   +f" ( b )  222426 /, 226325 /, /;,"
@@ -180,17 +176,17 @@ gimple1 font !
   +f" ( g )  215145 /, 420345 /, /;,"
   +f" ( h )  222426 /, 234642 /, /;,"
   +f" ( i )  422234 /, 353636 /, /;,"
-;
+;slide
 
-: memory-format
+slide:
   .title" Memory Format"
   *f" One byte per point 00 - 99
   *f" 3 points per quartic"
   *f" End marked by tagging high bit of"
   +f" first byte in the last triplet"
-;
+;slide
 
-: gimple1-slide
+slide:
   .title" Gimple1"
   5 44 font-pick
   .f"     " 64 32 do i font-emit loop font-cr
@@ -203,44 +199,44 @@ gimple1 font !
   *f" 2 strokes for numbers and lowercase"
   +f" letters"
   *f" no more then 3 strokes in any glyph"
-;
+;slide
 
-: size-can-vary
+slide:
   .title" Size Can Vary"
   normal
   100 25 do i font-size!
       .f"     Chars per line: " i fn. font-cr 5 +loop
-;
+;slide
 
-: aspect-can-vary
+slide:
   .title" Aspect Ratio Can Vary"
   normal
   180 20 do normal font-width @ i 100 */ font-width !
       .f"    Percent normal: " i fn. bspace .f" %" font-cr 15 +loop
-;
+;slide
 
-: weight-can-vary
+slide:
   .title" Weight Can Vary"
   normal
   10 0 do i 1+ dup 30 font-pick
       .f"     Weight " fn. font-cr loop
-;
+;slide
 
-: slant-can-vary
+slide:
   .title" Slant Can Vary"
   normal
   130 -120 do i font-slant !
       .f"         Slant percent: "
       i fn. bspace .f" %" font-cr 15 +loop
-;
+;slide
 
-: applications
+slide:
   .title" Applications"
   *f" Slide shows"
   *f" Intercept gforth console I/O"
-;
+;slide
 
-: how-big
+slide:
   .title" How big is it?"
   *f" Source in 64 char blockish lines:"
   +f"   156 font.fs"
@@ -252,47 +248,23 @@ gimple1 font !
   +f"   981 total"
   *f" ~5k of core code"
   *f" ~512 bytes of font data"
-;
+;slide
 
-: future
+slide:
   .title" Future"
   *f" Huffman encode points?"
   *f" Support color"
   *f" Refactor"
   *f" Gimple2"
-;
+;slide
 
-: questions?
+slide:
   .title" Questions?"
   font-cr font-cr
   2 50 font-pick
   .f"   Code online at:" font-cr
   .f"     https://github.com/flagxor/simplefont" font-cr
-;
+;slide
 
-here
-' title ,
-' motivation ,
-' ground-rules ,
-' simple-graphics ,
-' simple-events ,
-' bezier-curves ,
-' de-castelijau-subdivision ,
-' quartic-curves-in-forth ,
-' quartic-drawing ,
-' anti-aliased-pen ,
-' font-layout1 ,
-' font-layout2 ,
-' font-format ,
-' memory-format ,
-' gimple1-slide ,
-' size-can-vary ,
-' aspect-can-vary ,
-' weight-can-vary ,
-' slant-can-vary ,
-' applications ,
-' how-big ,
-' future ,
-' questions? ,
 slideshow
 
