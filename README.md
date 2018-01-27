@@ -8,7 +8,7 @@ sudo apt-get install gforth
 ## Presentations
 
 ```
-./presentation.fs
+./presentation1.fs
 ```
 
 ## Terminal
