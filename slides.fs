@@ -3,7 +3,7 @@ require font.fs
 require dragon1.fs
 
 get-current
-vocabulary slides definitions
+vocabulary slides also slides definitions
 ( private )
 
 ( ------------------------------------------------------------ )
@@ -17,12 +17,9 @@ vocabulary slides definitions
 : font-pick ( b cols -- ) font-size!
                           width 20 */ font-weight!
                          0 font-slant ! ;
-: super-big   10 20 font-pick ;
-: big   6 30 font-pick ;
 : normal  2 44 font-pick ;
 : tiny  1 100 font-pick ;
 : bullet  10 44 font-pick font-cr s"   ~ " font-type normal ;
-: bspace font-width @ negate font-x +! ;
 : indent1  s"  " font-type ;
 : indent4  normal s"     " font-type ;
 
@@ -51,6 +48,19 @@ variable deck-count
 set-current
 ( public )
 
+( Font sizes )
+: super-big   10 20 font-pick ;
+: big   6 30 font-pick ;
+: normal   normal ;
+: tiny   tiny ;
+: font-pick ( b col -- ) font-pick ;
+: font-size! ( n -- ) font-size! ;
+
+( Bullets and Printing )
+: center-type ( s -- ) center-type ;
+: bspace font-width @ negate font-x +! ;
+: bullet   bullet ;
+
 : .f"   postpone s" postpone font-type ; immediate
 : .fl"   postpone s" postpone left-type ; immediate
 : *f"   postpone bullet postpone .fl" ; immediate
@@ -60,6 +70,7 @@ set-current
 : fn. ( n -- )
     s>d swap over dabs <<# 32 hold #s rot sign #> font-type #>> ;
 
+( Start the slideshow )
 : slideshow ( firstslide -- )
   dup deck ! here swap - cell / deck-count !
   1024 768 window
