@@ -1,4 +1,4 @@
-s" xlib.fs" included
+require xlib.fs
 
 ( ------------------------------------------------------------ )
 ( Public interface )

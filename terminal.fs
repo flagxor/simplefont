@@ -1,6 +1,8 @@
-s" grf.fs" included
-s" font.fs" included
-s" gimple1.fs" included
+#! /usr/bin/env gforth
+require grf.fs
+require font.fs
+require dragon1.fs
+
 ( ------------------------------------------------------------ )
 ( Redirect gforth terminal to grf + font )
 
@@ -18,9 +20,10 @@ s" gimple1.fs" included
 : terminal
   800 600 window
 
-  gimple1 font !
+  dragon1 font !
   10 font-width !  20 font-height !  100 font-weight!
 
+  ( intercept input and output )
   ['] font-type is type
   ['] font-emit is emit
   ['] grf-key is xkey
