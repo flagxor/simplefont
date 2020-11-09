@@ -1,4 +1,4 @@
-#! /usr/bin/env gforth 
+#! /usr/bin/env gforth
 
 require slides.fs
 require gimple1.fs
